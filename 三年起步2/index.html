@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>三年起步的陈浩冉小姐姐</title>
+    <link rel="stylesheet" href="小哥哥的秘密插件（禁止偷看）.css" />
+</head>
+<script>
+    var con=confirm("喜欢?");
+        while (con == flase) {
+            con=confirm("123456");
+        }  
+        alert("999");
+    
+    
+</script>
+
+<body>
+    <div class="wrap" id="wrap">
+        <div class="slide" id="slide">
+            <ul>
+                <li>
+                    <a href="#">
+                        <img src="image/1.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="image/2.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="image/3.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="image/4.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="image/5.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="image/6.jpg" alt="" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="image/7.jpg" alt="" />
+                    </a>
+                </li>
+            </ul>
+            <div class="arrow" id="arrow">
+                <a href="javascript:;" class="prev" id="arrLeft"></a>
+                <a href="javascript:;" class="next" id="arrRight"></a>
+            </div>
+        </div>
+    </div>
+    <script src="animate.js"></script>
+    <script>
+
+        //每一张图片的位置大小等等的信息
+        var config = [{
+            width: 250,
+            height:370,
+            top: 10,
+            left: 55,
+            opacity: 0.4,
+            zIndex: 2
+        }, //0
+        {
+            width: 300,
+            height:450,
+            top: 70,
+            left: -55,
+            opacity: 0.6,
+            zIndex: 3
+        }, //1
+        {
+            width: 400,
+            height:600,
+            top: 130,
+            left: 125,
+            opacity: 0.8,
+            zIndex: 4
+        }, //2
+        {
+            width: 500,
+            height:750,
+            top: 190,
+            left: 300,
+            opacity: 1,
+            zIndex: 5
+        }, //3
+        {
+            width: 400,
+            height:600,
+            top: 130,
+            left: 650,
+            opacity: 0.8,
+            zIndex: 4
+        }, //4
+        {
+            width: 300,
+            height:450,
+            top: 70,
+            left: 885,
+            opacity: 0.6,
+            zIndex: 3
+        },//5
+        {
+            width:250,
+            height:370,
+            top: 10,
+            left: 820,
+            opacity: 0.4,
+            zIndex: 2
+        }
+        ];
+
+
+        /*
+        *   1 让图片都散开
+        *       使用了一个config 的数组，保存了每张图片应该散开的位置
+        *       得到所有的图片，使用索引对应的方式，获取该图片应该变成的样子，以动画的形式修改即可
+        *   2 左右按钮的点击效果，切换图片
+        *       点击按钮
+        *
+        * */
+
+        var lis = document.querySelector("#slide").querySelectorAll("li");
+        var leftBtn = document.querySelector("#arrLeft");
+        var rightBtn = document.querySelector("#arrRight");
+        // 因为点击的时候，可以使用操作的数组的方式快速改变图片的排序，先把所有的图片都存到一个数组里面
+        var picArr = [];
+        for (var j = 0; j < lis.length; j++) {
+            picArr[j] = lis[j];
+        }
+        //散开的效果
+        //遍历lis伪数组，使用索引对应的方式获取当前元素应该变成什么样子，调用封装好的函数变化
+        rotate();
+        function rotate() {
+            for (var i = 0; i < picArr.length; i++) {
+                animate_v6(picArr[i], config[i]);
+            }
+        }
+
+        // 点击切换图片的效果
+        rightBtn.onclick = function () {
+            //第一张要到第二张的位置，第二张要到第三章的位置，。。。。第四章到第五张的位置，第五张到第一张的位置
+            // arr.unshift(arr.pop());
+            picArr.unshift(picArr.pop());
+            // 如果希望元素还要改变样式，就得手动操作
+            rotate();
+        }
+
+        leftBtn.onclick = function () {
+            picArr.push(picArr.shift());
+            rotate();
+        }
+
+        //自动轮播
+        //每过一段时间，点击一次右按钮
+
+        var slide = document.getElementById("slide");
+        var timer = setInterval(rightBtn.onclick, 2000);
+        slide.onmouseover = function () {
+            clearInterval(timer);
+        }
+        slide.onmouseout = function () {
+            timer = setInterval(rightBtn.onclick, 2000);
+        }
+
+
+    </script>
+</body>
+
+</html>
